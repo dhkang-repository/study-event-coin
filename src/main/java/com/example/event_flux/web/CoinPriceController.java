@@ -1,5 +1,6 @@
-package com.example.event_flux.coin;
+package com.example.event_flux.web;
 
+import com.example.event_flux.price.CoinPriceEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.http.codec.ServerSentEvent;

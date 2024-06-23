@@ -1,8 +1,6 @@
-package com.example.event_flux.coin;
+package com.example.event_flux.price;
 
 import org.springframework.context.ApplicationEvent;
-
-import java.time.Clock;
 
 public class CoinPriceEvent extends ApplicationEvent {
     private final String coinName;

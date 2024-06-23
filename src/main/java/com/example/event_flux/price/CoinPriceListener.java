@@ -1,4 +1,4 @@
-package com.example.event_flux.coin;
+package com.example.event_flux.price;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

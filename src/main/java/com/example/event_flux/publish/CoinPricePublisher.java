@@ -1,5 +1,7 @@
-package com.example.event_flux.coin;
+package com.example.event_flux.publish;
 
+import com.example.event_flux.price.CoinPriceEvent;
+import com.example.event_flux.trading.TradingStrategy;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +15,20 @@ import reactor.core.publisher.Mono;
 public class CoinPricePublisher {
     @Autowired
     private ApplicationEventPublisher applicationEventPublisher;
+    @Autowired
+    private TradingStrategy tradingStrategy;
 
     private final WebClient webClient = WebClient.create("https://api.bithumb.com");
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 1000)
     public void publishCoinPrice() {
-        String[] coins = {"BTC", "ETH", "XRP"};
+//        String[] coins = {"BTC", "ETH", "DOGE"};
+        String[] coins = {"DOGE"};
         for (String coin : coins) {
             fetchCoinPrice(coin).subscribe(price -> {
                 CoinPriceEvent event = new CoinPriceEvent(this, coin, price);
                 applicationEventPublisher.publishEvent(event);
+                tradingStrategy.evaluate(event); // 가격 업데이트 시마다 전략 평가
             });
         }
     }
